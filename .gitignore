@@ -27,3 +27,6 @@
 *.exe
 *.out
 *.app
+
+#Random thing that makes it not want to commit
+*.opensdf
