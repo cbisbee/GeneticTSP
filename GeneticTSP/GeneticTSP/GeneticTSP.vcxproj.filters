@@ -24,4 +24,15 @@
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="City.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Population.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Chromosome.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+  </ItemGroup>
 </Project>
