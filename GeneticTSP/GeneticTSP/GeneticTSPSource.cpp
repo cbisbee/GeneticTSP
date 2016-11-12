@@ -23,7 +23,13 @@ void readData(std::map<int, City> &cityList)
 Chromosome crossover(Chromosome chromA, Chromosome chromB)
 {
 	Chromosome newChrom = Chromosome();
-	//perform crossover functions
+	//put the first 5 of chromA into newChrom, put the second 5 of chromB into newChrom...
+	for (int i = 0; i < TOURSIZE; i++) {
+		if ((i < 5) || (i >= 10 && i < 15) || (i >= 20))
+			newChrom.addCity(chromA.getCity(i));
+		else
+			newChrom.addCity(chromB.getCity(i));
+	}
 	return newChrom;
 }
 

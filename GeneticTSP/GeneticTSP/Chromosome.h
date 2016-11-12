@@ -16,6 +16,7 @@ private:
 	double costOfTrip;
 	int numUniqueCitiesVisited;
 	bool fullTour; //start and stop in same place
+	bool travelingSalesman;
 	double fitness;
 public:
 	Chromosome() {
@@ -47,7 +48,25 @@ public:
 	double getCostOfTrip() {
 		return costOfTrip;
 	}
-	void mutate(); //TODO: Figure out mutation logic for this function
+	bool getTravelingSalesman() {
+		return travelingSalesman;
+	}
+	//This function shuffles the list of visited cities
+	void mutate() {
+		int temp;
+		for (int i = 0; i < visitedCities.size(); i++) {
+			if ((i + 3) < visitedCities.size()) {
+				temp = visitedCities[i];
+				visitedCities[i] = visitedCities[i + 3];
+				visitedCities[i + 3] = temp;
+			}
+			else {
+				temp = visitedCities[i];
+				visitedCities[i] = visitedCities[i - 1];
+				visitedCities[i - 1] = temp;
+			}
+		}
+	}
 	void setNumUniqueCitiesVisited() {
 		numUniqueCitiesVisited = 0;
 		std::vector<int> cityList;
@@ -93,6 +112,12 @@ public:
 			costOfTrip += curCost;
 		}
 	}
+	void setTravelingSalesman() {
+		if (numUniqueCitiesVisited == TOURSIZE && fullTour)
+			travelingSalesman = true;
+		else
+			travelingSalesman = false;
+	}
 	void initializeChromsome(std::map<int, City> mapData) {
 		visitedCities.clear();
 		for (int i = 0; i < TOURSIZE; i++) {
@@ -107,6 +132,12 @@ public:
 		}
 		std::cout << std::left << std::setw(10) << "fitness" << fitness;
 		std::cout << std::endl;
+	}
+	void addCity(int city) {
+		visitedCities.push_back(city);
+	}
+	int getCity(int index) {
+		return visitedCities[index];
 	}
 	bool operator<(const Chromosome& B) {
 		return (this->fitness < B.fitness);
