@@ -29,7 +29,21 @@ public:
 	int getYCor() {
 		return yCor;
 	}
+	void setName(int _name) {
+		name = _name;
+	}
+	void setXCor(int _xCor) {
+		xCor = _xCor;
+	}
+	void setYCor(int _yCor) {
+		yCor = _yCor;
+	}
+	void setAll(int _name, int _xCor, int _yCor) {
+		name = _name;
+		xCor = _xCor;
+		yCor = _yCor;
+	}
 	float calculateDistance(City cityB) {
-		return std::sqrt((std::pow(xCor - cityB.getXCor, 2) + std::pow(yCor - cityB.getYCor(), 2)));
+		return std::sqrt((std::pow(xCor - cityB.getXCor(), 2) + std::pow(yCor - cityB.getYCor(), 2)));
 	}
 };

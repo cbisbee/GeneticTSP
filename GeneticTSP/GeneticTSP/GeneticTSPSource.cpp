@@ -2,10 +2,12 @@
 #include <fstream>
 #include <vector>
 #include <math.h>
+#include <map>
 #include "Chromosome.h"
 #include "City.h"
+#include "Population.h"
 
-void readData(std::vector<City> &cityList)
+void readData(std::map<int, City> &cityList)
 {
 	int name, x, y;
 
@@ -14,7 +16,7 @@ void readData(std::vector<City> &cityList)
 	{
 		fin >> name >> x >> y;
 		City newCity = City(name, x, y);
-		cityList.push_back(newCity);
+		cityList.insert(std::pair<int, City>(newCity.getName(), newCity));
 	}
 }
 
@@ -28,8 +30,15 @@ Chromosome crossover(Chromosome chromA, Chromosome chromB)
 
 int main()
 {
-	std::vector<City> cityList;
-	readData(cityList);
+	srand(time(NULL));
+	std::map<int, City> mapData;
+	readData(mapData);
+	Population gen0 = Population(0);
+	gen0.InitializePopulation(mapData);
+	gen0.printPopulation();
+
+	std::cin.get();
+	std::cin.get();
 
 
 
