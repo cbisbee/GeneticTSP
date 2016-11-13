@@ -20,7 +20,7 @@ void readData(std::map<int, City> &cityList)
 	}
 }
 
-Individual crossover(Individual indA, Individual indB, std::map<int,City> mapData)
+Individual reproduce(Individual indA, Individual indB, std::map<int,City> mapData)
 {
 	Individual newInd = Individual();
 	//put the first 5 of chromA into newChrom, put the second 5 of chromB into newChrom...
@@ -41,9 +41,54 @@ int main()
 	std::map<int, City> mapData;
 	readData(mapData);
 	Population gen0 = Population(0);
+	Population gen1(1);
+	Population gen2(2);
+	Population gen3(3);
+	Population gen4(4);
+	Population gen5(5);
+	Population gen6(6);
+	Population gen7(7);
+	Population gen8(8);
+	Population gen9(9);
+
 	gen0.InitializePopulation(mapData);
 	gen0.printPopulation();
 
+	gen1 = gen0.generateNewGeneration(mapData);
+	std::cout << std::endl << std::endl << std::endl;
+	gen1.printPopulation();
+
+	gen2 = gen1.generateNewGeneration(mapData);
+	std::cout << std::endl << std::endl << std::endl;
+	gen2.printPopulation();
+
+	gen3 = gen2.generateNewGeneration(mapData);
+	std::cout << std::endl << std::endl << std::endl;
+	gen3.printPopulation();
+
+	gen4 = gen3.generateNewGeneration(mapData);
+	std::cout << std::endl << std::endl << std::endl;
+	gen4.printPopulation();
+
+	gen5 = gen4.generateNewGeneration(mapData);
+	std::cout << std::endl << std::endl << std::endl;
+	gen5.printPopulation();
+
+	//gen6 = gen5.generateNewGeneration(mapData);
+	//std::cout << std::endl << std::endl << std::endl;
+	//gen6.printPopulation();
+
+	//gen7 = gen6.generateNewGeneration(mapData);
+	//std::cout << std::endl << std::endl << std::endl;
+	//gen7.printPopulation();
+
+	//gen8 = gen7.generateNewGeneration(mapData);
+	//std::cout << std::endl << std::endl << std::endl;
+	//gen8.printPopulation();
+
+	//gen9 = gen8.generateNewGeneration(mapData);
+	//std::cout << std::endl << std::endl << std::endl;
+	//gen9.printPopulation();
 
 
 	std::cin.get();

@@ -18,6 +18,7 @@ private:
 	bool fullTour; //start and stop in same place
 	bool travelingSalesman;
 	double fitness;
+	double probability;
 public:
 	Individual() {
 		visitedCities.reserve(TOURSIZE);
@@ -139,7 +140,13 @@ public:
 	int getCity(int index) {
 		return visitedCities[index];
 	}
+	void setProbability(double _probability) {
+		probability = _probability;
+	}
+	double getProbability() {
+		return probability;
+	}
 	bool operator<(const Individual& B) {
-		return (this->fitness < B.fitness);
+		return (this->fitness > B.fitness);
 	}
 };
