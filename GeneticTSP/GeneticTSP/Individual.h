@@ -8,9 +8,9 @@
 
 const int TOURSIZE = 25; //24 cities plus return city
 
-//This class represents an "chromosome" in our populaiton
+//This class represents a "chromosome" in our populaiton
 //an chromosome, in this case, represents a trip
-class Chromosome{
+class Individual{
 private:
 	std::vector<int> visitedCities;
 	double costOfTrip;
@@ -19,14 +19,14 @@ private:
 	bool travelingSalesman;
 	double fitness;
 public:
-	Chromosome() {
+	Individual() {
 		visitedCities.reserve(TOURSIZE);
 		costOfTrip = -1;
 		numUniqueCitiesVisited = -1;
 		fullTour = false;
 		fitness = -1;
 	}
-	Chromosome(std::vector<int> &_visitedCities) {
+	Individual(std::vector<int> &_visitedCities) {
 		visitedCities = _visitedCities;
 		costOfTrip = -1;
 		numUniqueCitiesVisited = -1;
@@ -118,7 +118,7 @@ public:
 		else
 			travelingSalesman = false;
 	}
-	void initializeChromsome(std::map<int, City> mapData) {
+	void initializeIndividual(std::map<int, City> mapData) {
 		visitedCities.clear();
 		for (int i = 0; i < TOURSIZE; i++) {
 			int city = rand() % TOURSIZE;
@@ -126,7 +126,7 @@ public:
 		}
 		setFitness(mapData);
 	}
-	void printChromosome() {
+	void printIndividual() {
 		for (int i = 0; i < visitedCities.size(); i++) {
 			std::cout << std::left << std::setw(4) << visitedCities[i];
 		}
@@ -139,7 +139,7 @@ public:
 	int getCity(int index) {
 		return visitedCities[index];
 	}
-	bool operator<(const Chromosome& B) {
+	bool operator<(const Individual& B) {
 		return (this->fitness < B.fitness);
 	}
 };

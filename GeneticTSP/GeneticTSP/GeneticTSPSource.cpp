@@ -3,7 +3,7 @@
 #include <vector>
 #include <math.h>
 #include <map>
-#include "Chromosome.h"
+#include "Individual.h"
 #include "City.h"
 #include "Population.h"
 
@@ -20,20 +20,21 @@ void readData(std::map<int, City> &cityList)
 	}
 }
 
-Chromosome crossover(Chromosome chromA, Chromosome chromB)
+Individual crossover(Individual indA, Individual indB, std::map<int,City> mapData)
 {
-	Chromosome newChrom = Chromosome();
+	Individual newInd = Individual();
 	//put the first 5 of chromA into newChrom, put the second 5 of chromB into newChrom...
 	for (int i = 0; i < TOURSIZE; i++) {
 		if ((i < 5) || (i >= 10 && i < 15) || (i >= 20))
-			newChrom.addCity(chromA.getCity(i));
+			newInd.addCity(indA.getCity(i));
 		else
-			newChrom.addCity(chromB.getCity(i));
+			newInd.addCity(indB.getCity(i));
 	}
-	return newChrom;
+	newInd.setFitness(mapData);
+	return newInd;
 }
 
-
+//TODO: Implement actual addition of generations in main, need to figure that logic out.
 int main()
 {
 	srand(time(NULL));
@@ -42,6 +43,8 @@ int main()
 	Population gen0 = Population(0);
 	gen0.InitializePopulation(mapData);
 	gen0.printPopulation();
+
+
 
 	std::cin.get();
 	std::cin.get();

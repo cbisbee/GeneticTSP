@@ -1,33 +1,32 @@
 #pragma once
 #include <vector>
 #include <algorithm>
-#include "Chromosome.h"
+#include "Individual.h"
 
 //This class represents a population of chrosomes
 
 class Population {
 private:
-	std::vector<Chromosome> chromosomes;
+	std::vector<Individual> individuals;
 	double maxFitness = 0.0;
 	double minFitness = 0.0;
 	double avgFitness = 0.0;
 	int generationNumber;
-	//Chromosome chromosomes[TOURSIZE];
 public:
 	Population(int _generationNumber) {
 		generationNumber = _generationNumber;
-		chromosomes.reserve(TOURSIZE);
-		chromosomes.resize(TOURSIZE);
+		individuals.reserve(TOURSIZE);
+		individuals.resize(TOURSIZE);
 	}
 	Population() {
-		chromosomes.reserve(TOURSIZE);
-		chromosomes.resize(TOURSIZE);
+		individuals.reserve(TOURSIZE);
+		individuals.resize(TOURSIZE);
 	}
 	void InitializePopulation(std::map<int, City> mapData) {
 		for (int i = 0; i < TOURSIZE; i++) {
-			Chromosome newChrom;
-			newChrom.initializeChromsome(mapData);
-			chromosomes[i] = newChrom;
+			Individual newInd;
+			newInd.initializeIndividual(mapData);
+			individuals[i] = newInd;
 		}
 		sortPopulationByFitness();
 		setAvgFitness();
@@ -35,12 +34,12 @@ public:
 		setMinFitness();
 	}
 	void sortPopulationByFitness() {
-		std::sort(chromosomes.begin(), chromosomes.end());
+		std::sort(individuals.begin(), individuals.end());
 	}
 	void printPopulation() {
 		std::cout << "Generation " << generationNumber << ":" << std::endl;
-		for (int i = 0; i < chromosomes.size(); i++)
-			chromosomes[i].printChromosome();
+		for (int i = 0; i < individuals.size(); i++)
+			individuals[i].printIndividual();
 
 		std::cout << std::endl;
 		std::cout << "Generation min fitness: " << minFitness << std::endl;
@@ -48,27 +47,27 @@ public:
 		std::cout << "Generation avg fitness: " << avgFitness << std::endl;
 	}
 	void setMinFitness() {
-		double currentMin = chromosomes[0].getFitness();
-		for (int i = 1; i < chromosomes.size(); i++) {
-			if (chromosomes[i].getFitness() < currentMin)
-				currentMin = chromosomes[i].getFitness();
+		double currentMin = individuals[0].getFitness();
+		for (int i = 1; i < individuals.size(); i++) {
+			if (individuals[i].getFitness() < currentMin)
+				currentMin = individuals[i].getFitness();
 		}
 		minFitness = currentMin;
 	}
 	void setMaxFitness() {
-		double currentMax = chromosomes[0].getFitness();
-		for (int i = 1; i < chromosomes.size(); i++) {
-			if (chromosomes[i].getFitness() > currentMax)
-				currentMax = chromosomes[i].getFitness();
+		double currentMax = individuals[0].getFitness();
+		for (int i = 1; i < individuals.size(); i++) {
+			if (individuals[i].getFitness() > currentMax)
+				currentMax = individuals[i].getFitness();
 		}
 		maxFitness = currentMax;
 	}
 	void setAvgFitness() {
 		double sum = 0.0;
-		for (int i = 0; i < chromosomes.size(); i++) {
-			sum += chromosomes[i].getFitness();
+		for (int i = 0; i < individuals.size(); i++) {
+			sum += individuals[i].getFitness();
 		}
-		avgFitness = (sum / chromosomes.size());
+		avgFitness = (sum / individuals.size());
 	}
 	void setGenerationNumber(int generation) {
 		generationNumber = generation;

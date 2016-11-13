@@ -31,7 +31,7 @@
     <ClInclude Include="Population.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="Chromosome.h">
+    <ClInclude Include="Individual.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
