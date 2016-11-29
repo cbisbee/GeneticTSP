@@ -60,19 +60,46 @@ void mutate(Individual &curInd)
 
 Individual crossover(Individual p1, Individual p2, std::map<int, City> mapData)
 {
-	//use roulette wheel or tournament selection to get p1 and p2
-
 	int startPos = rand() % TOURSIZE; //lower bound of p1 subtour
 	int endPos = rand() % TOURSIZE; //upper bound of p1 subtour
+
+	//if startPos and endPos are out of order then swap them around
+	if (startPos > endPos)
+	{
+		int temp = startPos;
+		startPos = endPos; 
+		endPos = temp;
+	}
 
 	Individual child; //creating new child
 
 	//loop and add the subtour of p1 to child
-
+	for (int i = 0; i < TOURSIZE; i++)
+	{
+		if (i < endPos && i > startPos)
+			child.setCityAt(i, p1.getCityAt(i));
+	}
 
 	//loop and add the cities from p2 that aren't already in child into any remaining spots in child until that bad boy is full
+	for (int i = 0; i < TOURSIZE; i++)
+	{
+		//double checking to make sure the child doesn't already have the city
+		if (!child.containsCity(p2.getCityAt(i)))
+		{
+			//finding empty spot in child to put city
+			for (int j = 0; j < TOURSIZE; j++)
+			{
+				if (child.getCityAt(j) == -1) //ABSOLUTELY HAVE TO INITIALIZE ALL INDIVIDUALS TO -1!!!!!!!!
+				{
+					child.setCityAt(j, p2.getCityAt(j));
+					break;
+				}
+			}
+		}
+	}
 
 	//return the new individual child
+	return child;
 
 }
 
@@ -125,25 +152,25 @@ int main()
 	gen0.InitializePopulation(mapData);
 	gen0.printPopulation();
 
-	gen1 = gen0.generateNewGeneration(mapData);
-	std::cout << std::endl << std::endl << std::endl;
-	gen1.printPopulation();
+	//gen1 = gen0.generateNewGeneration(mapData);
+	//std::cout << std::endl << std::endl << std::endl;
+	//gen1.printPopulation();
 
-	gen2 = gen1.generateNewGeneration(mapData);
-	std::cout << std::endl << std::endl << std::endl;
-	gen2.printPopulation();
+	//gen2 = gen1.generateNewGeneration(mapData);
+	//std::cout << std::endl << std::endl << std::endl;
+	//gen2.printPopulation();
 
-	gen3 = gen2.generateNewGeneration(mapData);
-	std::cout << std::endl << std::endl << std::endl;
-	gen3.printPopulation();
+	//gen3 = gen2.generateNewGeneration(mapData);
+	//std::cout << std::endl << std::endl << std::endl;
+	//gen3.printPopulation();
 
-	gen4 = gen3.generateNewGeneration(mapData);
-	std::cout << std::endl << std::endl << std::endl;
-	gen4.printPopulation();
+	//gen4 = gen3.generateNewGeneration(mapData);
+	//std::cout << std::endl << std::endl << std::endl;
+	//gen4.printPopulation();
 
-	gen5 = gen4.generateNewGeneration(mapData);
-	std::cout << std::endl << std::endl << std::endl;
-	gen5.printPopulation();
+	//gen5 = gen4.generateNewGeneration(mapData);
+	//std::cout << std::endl << std::endl << std::endl;
+	//gen5.printPopulation();
 
 	//gen6 = gen5.generateNewGeneration(mapData);
 	//std::cout << std::endl << std::endl << std::endl;

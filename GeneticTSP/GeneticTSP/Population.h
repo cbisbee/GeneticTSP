@@ -157,7 +157,7 @@ public:
 
 	void addIndividualAt(int pos, Individual newInd)
 	{
-		if (!(individuals.size() == TOURSIZE) && (pos >= 0) && (pos < TOURSIZE))
+		if ((pos >= 0) && (pos < TOURSIZE))
 			individuals.at(pos) = newInd;
 		else
 			std::cout << "Index out of bound or population is full when adding individual from Populaiton!" << std::endl;

@@ -149,4 +149,27 @@ public:
 	bool operator<(const Individual& B) {
 		return (this->fitness > B.fitness);
 	}
+	void setCityAt(int pos, int newCity)
+	{
+		if (pos >= 0 && pos < TOURSIZE)
+			visitedCities.at(pos) = newCity;
+		else
+			std::cout << "Index out of range when adding new city to Individual" << std::endl;
+	}
+	int getCityAt(int pos)
+	{
+		if (pos >= 0 && pos < TOURSIZE)
+			return visitedCities.at(pos);
+		else
+			std::cout << "Index out of range when trying to access Individual" << std::endl;
+	}
+	bool containsCity(int city)
+	{
+		for (int i = 0; i < TOURSIZE; i++)
+		{
+			if (visitedCities.at(i) == city)
+				return true;
+		}
+		return false;
+	}
 };
