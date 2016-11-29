@@ -8,7 +8,7 @@
 #include "Population.h"
 
 bool ELITISM = false;
-double MUTATIONRATE = .25;
+double MUTATIONRATE = 25;
 
 void readData(std::map<int, City> &cityList)
 {
@@ -53,9 +53,21 @@ Individual rouletteWheel(Population pop)
 void mutate(Individual &curInd)
 {
 	//loop through individual
-		//create a random number and check if it is equal to some CONSTANT MUTATION RATE
+	for (int i = 0; i < TOURSIZE; i++)
+	{
+		//create a random number and check if it is less than to some constant mutation rate
+		int randomNum = rand() & 100;
+		if (randomNum < MUTATIONRATE)
+		{
 			//get a random position with the bounds of the individual
+			int randomPos = rand() % TOURSIZE;
+
 			//swap the cities at i and at the random pos you found
+			int temp = curInd.getCityAt(i);
+			curInd.setCityAt(i, curInd.getCityAt(randomPos));
+			curInd.setCityAt(randomPos, temp);
+		}
+	}
 }
 
 Individual crossover(Individual p1, Individual p2, std::map<int, City> mapData)
@@ -100,7 +112,6 @@ Individual crossover(Individual p1, Individual p2, std::map<int, City> mapData)
 
 	//return the new individual child
 	return child;
-
 }
 
 Population evolve(Population pop, std::map<int, City> mapData)
