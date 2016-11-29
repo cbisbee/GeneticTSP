@@ -7,6 +7,9 @@
 #include "City.h"
 #include "Population.h"
 
+bool ELITISM = false;
+double MUTATIONRATE = .25;
+
 void readData(std::map<int, City> &cityList)
 {
 	int name, x, y;
@@ -47,7 +50,7 @@ Individual rouletteWheel(Population pop)
 
 }
 
-void mutate(Individual &curInd, std::map<int, City> mapData)
+void mutate(Individual &curInd)
 {
 	//loop through individual
 		//create a random number and check if it is equal to some CONSTANT MUTATION RATE
@@ -76,19 +79,30 @@ Individual crossover(Individual p1, Individual p2, std::map<int, City> mapData)
 Population evolve(Population pop, std::map<int, City> mapData)
 {
 	//create new population
+	Population newPop;
 
-	//determine whether or not oyu want eletism (NEED A GLOBAL VARIABLE FOR THIS)
+	//determine whether or not oyu want eletism 
+	int offset = 0;
+	if (ELITISM)
+	{
+		offset++;
+		newPop.addIndividualAt(0, pop.getIndividualAt(0));
+	}
 
-
-	//LOOP THIS UNTIL NEW POPULATION HAS TOURSIZE AMOUNT OF INDIVIDUALS
+	for (int i = (0 + offset); i < (TOURSIZE - offset); i++)
+	{
 		//create two Individuals (p1 and p2) using roulette wheel or tournament selection
-
+		Individual p1 = rouletteWheel(pop);
+		Individual p2 = rouletteWheel(pop);
 		//create a child Individual and set it equal to the crossover of p1 and p2
-
-	//add a bit of mutation to each individual (this involves a loop)
+		Individual child = crossover(p1,p2,mapData);
+		//add a bit of mutation to each individual
+		mutate(child);
+		newPop.addIndividualAt(i, child);
+	}
 
 	//return the new population
-
+	return newPop;
 }
 
 //TODO: Implement actual addition of generations in main, need to figure that logic out.
