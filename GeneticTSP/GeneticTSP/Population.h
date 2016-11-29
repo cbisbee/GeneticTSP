@@ -87,6 +87,14 @@ public:
 	double getMaxFitness() {
 		return maxFitness;
 	}
+	double getTotalFitness() {
+		double totalFit = 0;
+		for (int i = 0; i < TOURSIZE; i++)
+		{
+			totalFit += individuals[i].getFitness();
+		}
+		return totalFit;
+	}
 	double getAvgFitness() {
 		return avgFitness;
 	}
@@ -161,5 +169,16 @@ public:
 			individuals.at(pos) = newInd;
 		else
 			std::cout << "Index out of bound or population is full when adding individual from Populaiton!" << std::endl;
+	}
+	
+	Individual getFittestIndividual()
+	{
+		Individual fittest = individuals[0];
+		for (int i = 1; i < TOURSIZE; i++)
+		{
+			if (individuals[i].getFitness() > fittest.getFitness())
+				fittest = individuals[i];
+		}
+		return fittest;
 	}
 };

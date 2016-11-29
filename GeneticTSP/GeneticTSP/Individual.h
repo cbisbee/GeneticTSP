@@ -19,6 +19,7 @@ private:
 	bool travelingSalesman;
 	double fitness;
 	double probability;
+	double relativeFitness;
 public:
 	Individual() {
 		visitedCities.reserve(TOURSIZE);
@@ -171,5 +172,14 @@ public:
 				return true;
 		}
 		return false;
+	}
+	void setRelativeFitness(double _relativeFitness)
+	{
+		relativeFitness = _relativeFitness;
+	}
+
+	double getRelativeFitness()
+	{
+		return relativeFitness;
 	}
 };

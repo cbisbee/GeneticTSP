@@ -23,31 +23,22 @@ void readData(std::map<int, City> &cityList)
 	}
 }
 
-//Individual crossover()
-//
-//Individual reproduce(Individual indA, Individual indB, std::map<int,City> mapData)
-//{
-//	Individual newInd = Individual();
-//	//put the first 5 of chromA into newChrom, put the second 5 of chromB into newChrom...
-//	for (int i = 0; i < TOURSIZE; i++) {
-//		/*
-//		if ((i < 5) || (i >= 10 && i < 15) || (i >= 20))
-//			newInd.addCity(indA.getCity(i));
-//		else
-//			newInd.addCity(indB.getCity(i));
-//			*/
-//		if ((i <= ((int)TOURSIZE / 2) || i == (TOURSIZE - 1)))
-//			newInd.addCity(indA.getCity(i));
-//		else
-//			newInd.addCity(indB.getCity(i));
-//	}
-//	newInd.setFitness(mapData);
-//	return newInd;
-//}
-
-Individual rouletteWheel(Population pop)
+Individual tournamentSelection(Population pop)
 {
+	Individual selectedIndividual;
+	int tournamentSize = TOURSIZE;
 
+	Population tournament;
+
+	for (int i = 0; i < tournamentSize; i++)
+	{
+		int randomID = rand() % TOURSIZE;
+		tournament.addIndividualAt(i, pop.getIndividualAt(randomID));
+	}
+	
+	selectedIndividual = tournament.getFittestIndividual();
+
+	return selectedIndividual;
 }
 
 void mutate(Individual &curInd)
@@ -130,8 +121,8 @@ Population evolve(Population pop, std::map<int, City> mapData)
 	for (int i = (0 + offset); i < (TOURSIZE - offset); i++)
 	{
 		//create two Individuals (p1 and p2) using roulette wheel or tournament selection
-		Individual p1 = rouletteWheel(pop);
-		Individual p2 = rouletteWheel(pop);
+		Individual p1 = tournamentSelection(pop);
+		Individual p2 = tournamentSelection(pop);
 		//create a child Individual and set it equal to the crossover of p1 and p2
 		Individual child = crossover(p1,p2,mapData);
 		//add a bit of mutation to each individual
