@@ -157,7 +157,7 @@ public:
 
 	Individual getIndividualAt(int pos)
 	{
-		if ((pos < TOURSIZE) && (pos = 0))
+		if ((pos < TOURSIZE) && (pos >= 0))
 			return individuals[pos];
 		else
 			std::cout << "Index out of bounds when getting individual from Population!" << std::endl;

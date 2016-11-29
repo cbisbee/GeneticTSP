@@ -27,6 +27,10 @@ public:
 		numUniqueCitiesVisited = -1;
 		fullTour = false;
 		fitness = -1;
+		for (int i = 0; i < TOURSIZE; i++)
+		{
+			visitedCities.push_back(-1);
+		}
 	}
 	Individual(std::vector<int> &_visitedCities) {
 		visitedCities = _visitedCities;

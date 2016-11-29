@@ -79,7 +79,7 @@ Individual crossover(Individual p1, Individual p2, std::map<int, City> mapData)
 	//loop and add the subtour of p1 to child
 	for (int i = 0; i < TOURSIZE; i++)
 	{
-		if (i < endPos && i > startPos)
+		if (i < endPos && i > startPos) //DO I NEED A LESS THAN OR EQUAL OR GREATER THAN OR EQUAL
 			child.setCityAt(i, p1.getCityAt(i));
 	}
 
@@ -154,9 +154,9 @@ int main()
 	gen0.InitializePopulation(mapData);
 	gen0.printPopulation();
 
-	//gen1 = gen0.generateNewGeneration(mapData);
-	//std::cout << std::endl << std::endl << std::endl;
-	//gen1.printPopulation();
+	gen1 = evolve(gen0, mapData);
+	std::cout << std::endl << std::endl << std::endl;
+	gen1.printPopulation();
 
 	//gen2 = gen1.generateNewGeneration(mapData);
 	//std::cout << std::endl << std::endl << std::endl;
