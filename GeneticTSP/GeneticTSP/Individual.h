@@ -23,14 +23,13 @@ private:
 public:
 	Individual() {
 		visitedCities.reserve(TOURSIZE);
+		visitedCities.resize(TOURSIZE);
 		costOfTrip = -1;
 		numUniqueCitiesVisited = -1;
 		fullTour = false;
 		fitness = -1;
 		for (int i = 0; i < TOURSIZE; i++)
-		{
-			visitedCities.push_back(-1);
-		}
+			visitedCities[i] = -1;
 	}
 	Individual(std::vector<int> &_visitedCities) {
 		visitedCities = _visitedCities;
@@ -125,10 +124,15 @@ public:
 			travelingSalesman = false;
 	}
 	void initializeIndividual(std::map<int, City> mapData) {
-		visitedCities.clear();
-		for (int i = 0; i < TOURSIZE; i++) {
+		int i = 0;
+		while (i < TOURSIZE)
+		{
 			int city = rand() % TOURSIZE;
-			visitedCities.push_back(city);
+			if (!containsCity(city))
+			{
+				visitedCities.at(i) = city;
+				i++;
+			}
 		}
 		setFitness(mapData);
 	}

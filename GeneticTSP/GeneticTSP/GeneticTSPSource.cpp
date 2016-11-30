@@ -79,7 +79,7 @@ Individual crossover(Individual p1, Individual p2, std::map<int, City> mapData)
 	//loop and add the subtour of p1 to child
 	for (int i = 0; i < TOURSIZE; i++)
 	{
-		if (i < endPos && i > startPos) //DO I NEED A LESS THAN OR EQUAL OR GREATER THAN OR EQUAL
+		if (i <= endPos && i >= startPos) //DO I NEED A LESS THAN OR EQUAL OR GREATER THAN OR EQUAL
 			child.setCityAt(i, p1.getCityAt(i));
 	}
 
@@ -110,7 +110,7 @@ Population evolve(Population pop, std::map<int, City> mapData)
 	//create new population
 	Population newPop;
 
-	//determine whether or not oyu want eletism 
+	//determine whether or not you want eletism 
 	int offset = 0;
 	if (ELITISM)
 	{

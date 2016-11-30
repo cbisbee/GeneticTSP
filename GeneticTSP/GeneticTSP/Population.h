@@ -3,7 +3,7 @@
 #include <algorithm>
 #include "Individual.h"
 
-//This class represents a population of chrosomes
+//This class represents a population of Individuals
 
 class Population {
 private:
@@ -108,52 +108,6 @@ public:
 			individuals[i].setProbability(.04*(i + 1));
 		}
 	}
-
-
-	//Individual crossover(Individual indA, Individual indB, std::map<int, City> mapData) {
-	//	Individual newInd;
-	//	//put the first 5 of chromA into newChrom, put the second 5 of chromB into newChrom...
-	//	for (int i = 0; i < TOURSIZE; i++) {
-	//		if ((i < 5) || (i >= 10 && i < 15) || (i >= 20))
-	//			newInd.addCity(indA.getCity(i));
-	//		else
-	//			newInd.addCity(indB.getCity(i));
-	//	}
-	//	newInd.setFitness(mapData);
-	//	return newInd;
-	//}
-
-	//Individual getParent() {
-	//	Individual parent;
-	//	double randNum = rand() / (double)RAND_MAX;
-	//	double offset = 0.0;
-	//	for (int i = 0; i < TOURSIZE; i++) {
-	//		offset += individuals[i].getProbability();
-	//		if (randNum < offset) {
-	//			parent = individuals[i];
-	//			individuals[i].setProbability(.1); //RISKY BUISNESS HERE, TRYING TO GET RID OF REPEATED PARENTS FOR MORE DIVERSITY
-	//			break;
-	//		}
-	//	}
-	//	return parent;
-	//}
-
-	//Population generateNewGeneration(std::map<int,City> mapData) {
-	//	Individual mother;
-	//	Individual father;
-	//	Individual offspring;
-	//	std::vector<Individual> newPopulation;
-	//	newPopulation.push_back(individuals[0]); //Always keep the best individual
-	//	while (newPopulation.size() < TOURSIZE - 1) {
-	//		mother = getParent();
-	//		father = getParent();
-	//		offspring = crossover(mother, father, mapData);
-	//		newPopulation.push_back(offspring);
-	//	}
-	//	newPopulation.push_back(individuals[TOURSIZE - 1]); //Always keep the worst individual
-	//	Population newPop(newPopulation);
-	//	return newPop;
-	//}
 
 	Individual getIndividualAt(int pos)
 	{
