@@ -3,11 +3,12 @@
 #include <vector>
 #include <math.h>
 #include <map>
+#include <algorithm>
 #include "Individual.h"
 #include "City.h"
 #include "Population.h"
 
-bool ELITISM = false;
+bool ELITISM = true;
 double MUTATIONRATE = 25;
 
 void readData(std::map<int, City> &cityList)
@@ -65,6 +66,7 @@ Individual crossover(Individual p1, Individual p2, std::map<int, City> mapData)
 {
 	int startPos = rand() % TOURSIZE; //lower bound of p1 subtour
 	int endPos = rand() % TOURSIZE; //upper bound of p1 subtour
+	int nump1 = 0, nump2 = 0;
 
 	//if startPos and endPos are out of order then swap them around
 	if (startPos > endPos)
@@ -77,17 +79,21 @@ Individual crossover(Individual p1, Individual p2, std::map<int, City> mapData)
 	Individual child; //creating new child
 
 	//loop and add the subtour of p1 to child
-	for (int i = 0; i < TOURSIZE; i++)
+	for (int i = startPos; i <= endPos; i++)
 	{
-		if (i <= endPos && i >= startPos) //DO I NEED A LESS THAN OR EQUAL OR GREATER THAN OR EQUAL
 			child.setCityAt(i, p1.getCityAt(i));
+			nump1++;
 	}
+
+	std::vector<int> addedCities = child.getVisitedCities();
 
 	//loop and add the cities from p2 that aren't already in child into any remaining spots in child until that bad boy is full
 	for (int i = 0; i < TOURSIZE; i++)
 	{
+		int city = p2.getCityAt(i);
 		//double checking to make sure the child doesn't already have the city
-		if (!child.containsCity(p2.getCityAt(i)))
+		//if (!(child.containsCity(city)))
+		if(std::find(addedCities.begin(), addedCities.end(), city) == addedCities.end())
 		{
 			//finding empty spot in child to put city
 			for (int j = 0; j < TOURSIZE; j++)
@@ -95,6 +101,7 @@ Individual crossover(Individual p1, Individual p2, std::map<int, City> mapData)
 				if (child.getCityAt(j) == -1) //ABSOLUTELY HAVE TO INITIALIZE ALL INDIVIDUALS TO -1!!!!!!!!
 				{
 					child.setCityAt(j, p2.getCityAt(j));
+					nump2++;
 					break;
 				}
 			}
@@ -118,7 +125,7 @@ Population evolve(Population pop, std::map<int, City> mapData)
 		newPop.addIndividualAt(0, pop.getIndividualAt(0));
 	}
 
-	for (int i = (0 + offset); i < (TOURSIZE - offset); i++)
+	for (int i = (0 + offset); i < TOURSIZE; i++)
 	{
 		//create two Individuals (p1 and p2) using roulette wheel or tournament selection
 		Individual p1 = tournamentSelection(pop);
@@ -127,6 +134,7 @@ Population evolve(Population pop, std::map<int, City> mapData)
 		Individual child = crossover(p1,p2,mapData);
 		//add a bit of mutation to each individual
 		mutate(child);
+		child.setFitness(mapData);
 		newPop.addIndividualAt(i, child);
 	}
 
@@ -155,40 +163,13 @@ int main()
 	gen0.printPopulation();
 
 	gen1 = evolve(gen0, mapData);
+	gen1.setMinFitness();
+	gen1.setMaxFitness();
+	gen1.setAvgFitness();
 	std::cout << std::endl << std::endl << std::endl;
 	gen1.printPopulation();
 
-	//gen2 = gen1.generateNewGeneration(mapData);
-	//std::cout << std::endl << std::endl << std::endl;
-	//gen2.printPopulation();
 
-	//gen3 = gen2.generateNewGeneration(mapData);
-	//std::cout << std::endl << std::endl << std::endl;
-	//gen3.printPopulation();
-
-	//gen4 = gen3.generateNewGeneration(mapData);
-	//std::cout << std::endl << std::endl << std::endl;
-	//gen4.printPopulation();
-
-	//gen5 = gen4.generateNewGeneration(mapData);
-	//std::cout << std::endl << std::endl << std::endl;
-	//gen5.printPopulation();
-
-	//gen6 = gen5.generateNewGeneration(mapData);
-	//std::cout << std::endl << std::endl << std::endl;
-	//gen6.printPopulation();
-
-	//gen7 = gen6.generateNewGeneration(mapData);
-	//std::cout << std::endl << std::endl << std::endl;
-	//gen7.printPopulation();
-
-	//gen8 = gen7.generateNewGeneration(mapData);
-	//std::cout << std::endl << std::endl << std::endl;
-	//gen8.printPopulation();
-
-	//gen9 = gen8.generateNewGeneration(mapData);
-	//std::cout << std::endl << std::endl << std::endl;
-	//gen9.printPopulation();
 
 
 	std::cin.get();

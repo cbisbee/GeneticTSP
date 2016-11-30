@@ -38,9 +38,9 @@ public:
 		fullTour = false;
 		fitness = -1;
 	}
-	std::vector<int> getVisitedCities() {
-		return visitedCities;
-	}
+	//std::vector<int> getVisitedCities() {
+	//	return visitedCities;
+	//}
 	int getNumUniqueCitiesVisited() {
 		return numUniqueCitiesVisited;
 	}
@@ -176,7 +176,7 @@ public:
 	{
 		for (int i = 0; i < TOURSIZE; i++)
 		{
-			if (visitedCities.at(i) == city)
+			if (visitedCities[i] == city)
 				return true;
 		}
 		return false;
@@ -189,5 +189,10 @@ public:
 	double getRelativeFitness()
 	{
 		return relativeFitness;
+	}
+
+	std::vector<int> getVisitedCities()
+	{
+		return visitedCities;
 	}
 };
