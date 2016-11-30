@@ -96,8 +96,8 @@ Individual crossover(Individual p1, Individual p2, std::map<int, City> mapData)
 	{
 		int city = p2.getCityAt(i);
 		//double checking to make sure the child doesn't already have the city
-		//if (!(child.containsCity(city)))
-		if(std::find(addedCities.begin(), addedCities.end(), city) == addedCities.end())
+		if (!(child.containsCity(city)))
+		//if(std::find(addedCities.begin(), addedCities.end(), city) == addedCities.end())
 		{
 			//finding empty spot in child to put city
 			for (int j = 0; j < TOURSIZE; j++)
@@ -150,24 +150,17 @@ Population evolve(Population pop, std::map<int, City> mapData)
 //TODO: Implement actual addition of generations in main, need to figure that logic out.
 int main()
 {
+	int numGenerations = 20000;
 	srand(time(NULL));
 	std::map<int, City> mapData;
 	readData(mapData);
 	Population gen0 = Population(0);
-	Population gen1(1);
-	Population gen2(2);
-	Population gen3(3);
-	Population gen4(4);
-	Population gen5(5);
-	Population gen6(6);
-	Population gen7(7);
-	Population gen8(8);
-	Population gen9(9);
 
 	gen0.InitializePopulation(mapData);
+	std::cout << "Initial population:" << std::endl;
 	gen0.printPopulation();
 
-	for (int i = 0; i < 15000; i++)
+	for (int i = 0; i < numGenerations; i++)
 	{
 		gen0 = evolve(gen0, mapData);
 		gen0.setMinFitness();
@@ -177,9 +170,10 @@ int main()
 	}
 
 	std::cout << std::endl << std::endl << std::endl;
+	gen0.setGenerationNumber(numGenerations);
 	gen0.printPopulation();
 	Individual fittest = gen0.getFittestIndividual();
-	std::cout << fittest.getCostOfTrip() << std::endl;
+	std::cout << "Distance calculated: " << fittest.getCostOfTrip() << std::endl;
 
 	std::cin.get();
 	std::cin.get();

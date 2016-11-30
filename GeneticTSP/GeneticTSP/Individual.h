@@ -102,7 +102,7 @@ public:
 		else
 			std::cout << "Index out of range when trying to access Individual" << std::endl;
 	}
-	//This function may be broken, change to use with std::find
+
 	bool containsCity(int city)
 	{
 		if (std::find(visitedCities.begin(), visitedCities.end(), city) == visitedCities.end())
