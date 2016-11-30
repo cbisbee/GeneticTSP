@@ -48,44 +48,45 @@ void mutate(Individual &curInd)
 	for (int i = 0; i < TOURSIZE; i++)
 	{
 		//create a random number and check if it is less than to some constant mutation rate
-		int randomNum = rand() & 100;
-		if (randomNum < MUTATIONRATE)
+		int randomnum = rand() & 100;
+		if (randomnum < MUTATIONRATE)
 		{
 			//get a random position with the bounds of the individual
-			int randomPos = rand() % TOURSIZE;
+			int randompos = rand() % TOURSIZE;
 
 			//swap the cities at i and at the random pos you found
 			int temp = curInd.getCityAt(i);
-			curInd.setCityAt(i, curInd.getCityAt(randomPos));
-			curInd.setCityAt(randomPos, temp);
+			curInd.setCityAt(i, curInd.getCityAt(randompos));
+			curInd.setCityAt(randompos, temp);
 		}
 	}
 }
 
 Individual crossover(Individual p1, Individual p2, std::map<int, City> mapData)
 {
-	int startPos = rand() % TOURSIZE; //lower bound of p1 subtour
-	int endPos = rand() % TOURSIZE; //upper bound of p1 subtour
+	int startPosP1 = rand() % TOURSIZE; //lower bound of p1 subtour
+	int endPosP1 = rand() % TOURSIZE; //upper bound of p1 subtour
+	std::vector<int> addedCities;
 	int nump1 = 0, nump2 = 0;
 
 	//if startPos and endPos are out of order then swap them around
-	if (startPos > endPos)
+	if (startPosP1 > endPosP1)
 	{
-		int temp = startPos;
-		startPos = endPos; 
-		endPos = temp;
+		int temp = startPosP1;
+		startPosP1 = endPosP1; 
+		endPosP1 = temp;
 	}
 
 	Individual child; //creating new child
 
 	//loop and add the subtour of p1 to child
-	for (int i = startPos; i <= endPos; i++)
+	for (int i = startPosP1; i <= endPosP1; i++)
 	{
 			child.setCityAt(i, p1.getCityAt(i));
+			addedCities.push_back(p1.getCityAt(i));
 			nump1++;
 	}
 
-	std::vector<int> addedCities = child.getVisitedCities();
 
 	//loop and add the cities from p2 that aren't already in child into any remaining spots in child until that bad boy is full
 	for (int i = 0; i < TOURSIZE; i++)
@@ -100,7 +101,8 @@ Individual crossover(Individual p1, Individual p2, std::map<int, City> mapData)
 			{
 				if (child.getCityAt(j) == -1) //ABSOLUTELY HAVE TO INITIALIZE ALL INDIVIDUALS TO -1!!!!!!!!
 				{
-					child.setCityAt(j, p2.getCityAt(j));
+					child.setCityAt(j, p2.getCityAt(i));
+					//addedCities.push_back(city);
 					nump2++;
 					break;
 				}
@@ -162,20 +164,22 @@ int main()
 	gen0.InitializePopulation(mapData);
 	gen0.printPopulation();
 
-	gen1 = evolve(gen0, mapData);
-	gen1.setMinFitness();
-	gen1.setMaxFitness();
-	gen1.setAvgFitness();
+	for (int i = 0; i < 15000; i++)
+	{
+		gen0 = evolve(gen0, mapData);
+		gen0.setMinFitness();
+		gen0.setMaxFitness();
+		gen0.setAvgFitness();
+		gen0.sortPopulationByFitness();
+	}
+
 	std::cout << std::endl << std::endl << std::endl;
-	gen1.printPopulation();
-
-
-
+	gen0.printPopulation();
+	Individual fittest = gen0.getFittestIndividual();
+	std::cout << fittest.getCostOfTrip() << std::endl;
 
 	std::cin.get();
 	std::cin.get();
-
-
 
 	return 0;
 }

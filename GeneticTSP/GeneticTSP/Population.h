@@ -25,7 +25,6 @@ public:
 	Population(std::vector<Individual> individualList) {
 		individuals = individualList;
 		sortPopulationByFitness();
-		setPopulationProbabilities();
 		setAvgFitness();
 		setMaxFitness();
 		setMinFitness();
@@ -37,7 +36,6 @@ public:
 			individuals[i] = newInd;
 		}
 		sortPopulationByFitness();
-		setPopulationProbabilities();
 		setAvgFitness();
 		setMaxFitness();
 		setMinFitness();
@@ -100,13 +98,6 @@ public:
 	}
 	int getGenerationNumber() {
 		return generationNumber;
-	}
-	//call only after sorting population
-	void setPopulationProbabilities() {
-		Individual curInd;
-		for (int i = 0; i < individuals.size(); i++) {
-			individuals[i].setProbability(.04*(i + 1));
-		}
 	}
 
 	Individual getIndividualAt(int pos)
