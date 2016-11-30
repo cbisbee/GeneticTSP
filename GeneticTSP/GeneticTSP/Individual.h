@@ -105,12 +105,10 @@ public:
 	//This function may be broken, change to use with std::find
 	bool containsCity(int city)
 	{
-		for (int i = 0; i < TOURSIZE; i++)
-		{
-			if (visitedCities[i] == city)
-				return true;
-		}
-		return false;
+		if (std::find(visitedCities.begin(), visitedCities.end(), city) == visitedCities.end())
+			return false;
+		else
+			return true;
 	}
 
 	//only need the next two methods for roulette wheel which I am not currently using.
