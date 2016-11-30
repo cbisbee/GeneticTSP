@@ -48,18 +48,19 @@ public:
 		City nextCity = City();
 		double curCost = 0;
 		costOfTrip = 0;
-		for (int i = 0; i < visitedCities.size() - 2; i++) {
+
+		for (int i = 0; i < TOURSIZE; i++)
+		{
+			curCost = 0;
 			curCity.setAll(visitedCities[i], mapData[visitedCities[i]].getXCor(), mapData[visitedCities[i]].getYCor());
-			nextCity.setAll(visitedCities[i + 1], mapData[visitedCities[i + 1]].getXCor(), mapData[visitedCities[i + 1]].getYCor());
+			if ((i + 1) < TOURSIZE)
+				nextCity.setAll(visitedCities[i + 1], mapData[visitedCities[i + 1]].getXCor(), mapData[visitedCities[i + 1]].getYCor());
+			else
+				nextCity.setAll(visitedCities[0], mapData[visitedCities[0]].getXCor(), mapData[visitedCities[0]].getYCor());
 			curCost = curCity.calculateDistance(nextCity);
 			costOfTrip += curCost;
 		}
 
-		//adding distance back to starting city
-		curCity.setAll(visitedCities[TOURSIZE - 1], mapData[visitedCities[TOURSIZE - 1]].getXCor(), mapData[visitedCities[TOURSIZE - 1]].getYCor());
-		nextCity.setAll(visitedCities[0], mapData[visitedCities[0]].getXCor(), mapData[visitedCities[0]].getYCor());
-		curCost = curCity.calculateDistance(nextCity);
-		costOfTrip += curCost;
 	}
 
 	void initializeIndividual(std::map<int, City> mapData) {

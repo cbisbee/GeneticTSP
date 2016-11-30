@@ -9,10 +9,13 @@
 #include "Population.h"
 
 bool ELITISM = true;
-double MUTATIONRATE = 25;
+double MUTATIONRATE = 1;
 
 void readData(std::map<int, City> &cityList)
 {
+	City initCity;
+	initCity.setAll(0, -1, -1);
+	cityList.insert(std::pair<int, City>(0, initCity));
 	int name, x, y;
 
 	std::ifstream fin("MapData.in");

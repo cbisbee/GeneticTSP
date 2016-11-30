@@ -43,7 +43,7 @@ public:
 		xCor = _xCor;
 		yCor = _yCor;
 	}
-	float calculateDistance(City cityB) {
+	double calculateDistance(City cityB) {
 		return std::sqrt((std::pow(xCor - cityB.getXCor(), 2) + std::pow(yCor - cityB.getYCor(), 2)));
 	}
 };
