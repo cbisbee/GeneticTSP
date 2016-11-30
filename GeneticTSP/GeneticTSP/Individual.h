@@ -80,6 +80,7 @@ public:
 		for (int i = 0; i < visitedCities.size(); i++) {
 			std::cout << std::left << std::setw(4) << visitedCities[i];
 		}
+		std::cout << std::left << std::setw(4) << visitedCities[0];
 		std::cout << std::left << std::setw(10) << "fitness" << fitness;
 		std::cout << std::endl;
 	}
