@@ -6,7 +6,7 @@
 #include <iomanip>
 #include "City.h"
 
-const int TOURSIZE = 24; //24 cities 
+const int TOURSIZE = 24; 
 
 //This class represents a "chromosome" in our populaiton
 //an chromosome, in this case, represents a trip
@@ -68,7 +68,7 @@ public:
 		while (i < TOURSIZE)
 		{
 			int city = (rand() % TOURSIZE) + 1;
-			if (!containsCity(city)) //CHECK THIS OUT PLEASE **************************
+			if (!containsCity(city))
 			{
 				visitedCities.at(i) = city;
 				i++;
