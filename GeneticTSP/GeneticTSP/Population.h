@@ -53,6 +53,17 @@ public:
 		std::cout << "Generation max fitness: " << maxFitness << std::endl;
 		std::cout << "Generation avg fitness: " << avgFitness << std::endl;
 	}
+	void printPopulation(std::ofstream &fout) {
+		fout << "Generation " << generationNumber << ":" << std::endl;
+		for (int i = 0; i < individuals.size(); i++)
+			individuals[i].printIndividual(fout);
+
+		fout << std::endl;
+		fout << "Generation min fitness: " << minFitness << std::endl;
+		fout << "Generation max fitness: " << maxFitness << std::endl;
+		fout << "Generation avg fitness: " << avgFitness << std::endl;
+	}
+	
 	void setMinFitness() {
 		double currentMin = individuals[0].getFitness();
 		for (int i = 1; i < individuals.size(); i++) {

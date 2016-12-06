@@ -46,6 +46,8 @@ public:
 	double calculateDistance(City cityB) {
 		double deltaX = std::abs((double)(xCor - cityB.getXCor()));
 		double deltaY = std::abs((double)(yCor - cityB.getYCor()));
-		return std::sqrt((deltaX * deltaX) + (deltaY + deltaY));
+		double deltaX2 = deltaX * deltaX;
+		double deltaY2 = deltaY * deltaY;
+		return std::sqrt(deltaX2 + deltaY2);
 	}
 };

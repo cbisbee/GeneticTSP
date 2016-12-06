@@ -6,7 +6,7 @@
 #include <iomanip>
 #include "City.h"
 
-const int TOURSIZE = 24; //24 cities plus return city
+const int TOURSIZE = 24; //24 cities 
 
 //This class represents a "chromosome" in our populaiton
 //an chromosome, in this case, represents a trip
@@ -83,6 +83,14 @@ public:
 		std::cout << std::left << std::setw(4) << visitedCities[0];
 		std::cout << std::left << std::setw(10) << "fitness" << fitness;
 		std::cout << std::endl;
+	}
+	void printIndividual(std::ofstream &fout) {
+		for (int i = 0; i < visitedCities.size(); i++) {
+			fout << std::left << std::setw(4) << visitedCities[i];
+		}
+		fout << std::left << std::setw(4) << visitedCities[0];
+		fout << std::left << std::setw(10) << "fitness" << fitness;
+		fout << std::endl;
 	}
 
 	bool operator<(const Individual& B) {

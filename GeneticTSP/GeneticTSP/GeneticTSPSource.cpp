@@ -97,12 +97,11 @@ Individual crossover(Individual p1, Individual p2, std::map<int, City> mapData)
 		int city = p2.getCityAt(i);
 		//double checking to make sure the child doesn't already have the city
 		if (!(child.containsCity(city)))
-		//if(std::find(addedCities.begin(), addedCities.end(), city) == addedCities.end())
 		{
 			//finding empty spot in child to put city
 			for (int j = 0; j < TOURSIZE; j++)
 			{
-				if (child.getCityAt(j) == -1) //ABSOLUTELY HAVE TO INITIALIZE ALL INDIVIDUALS TO -1!!!!!!!!
+				if (child.getCityAt(j) == -1) 
 				{
 					child.setCityAt(j, p2.getCityAt(i));
 					//addedCities.push_back(city);
@@ -147,9 +146,9 @@ Population evolve(Population pop, std::map<int, City> mapData)
 	return newPop;
 }
 
-//TODO: Implement actual addition of generations in main, need to figure that logic out.
 int main()
 {
+	std::ofstream fout("GeneticTSP.txt");
 	int numGenerations = 20000;
 	srand(time(NULL));
 	std::map<int, City> mapData;
@@ -157,8 +156,8 @@ int main()
 	Population gen0 = Population(0);
 
 	gen0.InitializePopulation(mapData);
-	std::cout << "Initial population:" << std::endl;
-	gen0.printPopulation();
+	fout << "Initial population:" << std::endl;
+	gen0.printPopulation(fout);
 
 	for (int i = 0; i < numGenerations; i++)
 	{
@@ -169,14 +168,13 @@ int main()
 		gen0.sortPopulationByFitness();
 	}
 
-	std::cout << std::endl << std::endl << std::endl;
+	fout << std::endl << std::endl << std::endl;
 	gen0.setGenerationNumber(numGenerations);
-	gen0.printPopulation();
+	gen0.printPopulation(fout);
 	Individual fittest = gen0.getFittestIndividual();
-	std::cout << "Distance calculated: " << fittest.getCostOfTrip() << std::endl;
-
-	std::cin.get();
-	std::cin.get();
+	fout << std::endl;
+	fout << "Distance calculated: " << fittest.getCostOfTrip() << std::endl << std::endl;
+	fittest.printIndividual(fout);
 
 	return 0;
 }
